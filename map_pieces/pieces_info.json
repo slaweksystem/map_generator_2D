@@ -1,0 +1,106 @@
+{
+    "Name": "Basic Roads",
+    "PieceSize": 100,
+    "Pieces": [
+        {   
+            "ID": 1,
+            "name": "Straight",
+            "size": [1,1],
+            "image_path": "Straight.png",
+            "connections": [
+                [[0,0],[0,1]],
+                [[0,0],[0,-1]]
+            ],
+            "fields": [1]
+        },
+        {
+            "ID": 2,
+            "name": "Turn",
+            "size": [1,1],
+            "image_path": "Turn.png",
+            "connections": [
+                [[0,0],[0,1]],
+                [[0,0],[0,-1]]
+            ],
+            "fields": [1]
+        },
+        {
+            "ID": 3,
+            "name": "3WayIntersection",
+            "size": [1,1],
+            "image_path": "3WayIntersection.png",
+            "connections": [
+                [[0,0],[0,-1]],
+                [[0,0],[1,0]],
+                [[0,0],[-1,0]]
+            ],
+            "fields": [1]
+        },
+        {
+            "ID": 4,
+            "name": "4WayIntersection",
+            "size": [1,1],
+            "image_path": "4WayIntersection.png",
+            "connections": [
+                [[0,0],[0,1]],
+                [[0,0],[1,0]],
+                [[0,0],[0,-1]],
+                [[0,0],[-1,0]]
+            ],
+            "fields": [1]
+        },
+        {
+            "ID": 5,
+            "name": "Roundabout",
+            "size": [3,3],
+            "image_path": "Roundabout.png",
+            "connections": [
+                [[0,1],[0,1]],
+                [[1,0],[0,-1]],
+                [[1,2],[0,1]],
+                [[2,1],[0,-1]]
+            ],
+            "fields": [[1, 1, 1],
+                       [1, 1, 1],
+                       [1, 1, 1]]
+        },
+        {
+            "ID": 6,
+            "name": "Filler",
+            "size": [1,1],
+            "image_path": "Filler.png",
+            "connections": [],
+            "fields": [1]
+        },
+        {
+            "ID": 7,
+            "name": "BigDiagonalLeft",
+            "size": [2,3],
+            "image_path": "BigDiagonalLeft.png",
+            "connections": [
+                [[0,0],[0,1]],
+                [[2,1],[0,-1]]
+            ],
+            "fields": [
+                [1, 0],
+                [1, 1],
+                [0, 1]]
+        },
+        {
+            "ID": 8,
+            "name": "BigDiagonalRight",
+            "size": [2,3],
+            "image_path": "BigDiagonalRight.png",
+            "connections": [
+                [[0,1],[0,1]],
+                [[2,0],[0,-1]]
+            ],
+            "fields": [
+                [0, 1],
+                [1, 1],
+                [1, 0]]
+        }
+
+    ]
+}
+        
