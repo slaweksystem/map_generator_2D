@@ -43,7 +43,7 @@ class MapGrid:
         if not self.checkCoords(coords, (sizeX, sizeY)):
             raise Exception(f"Area occupied: {coords}")
 
-        # Check if connection points match
+        # Add Item
 
         self.mapElements.append({
             "ID": pieceID,
