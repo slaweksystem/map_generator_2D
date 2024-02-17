@@ -41,7 +41,7 @@ class MapGrid:
         sizeY = coords[0] + self.pieces[pieceID].size[sizeCoordY] - 1
 
         if not self.checkCoords(coords, (sizeX, sizeY)):
-            raise Exception("Area occupied")
+            raise Exception(f"Area occupied: {coords}")
 
         # Check if connection points match
 
