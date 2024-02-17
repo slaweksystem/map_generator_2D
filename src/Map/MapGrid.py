@@ -27,10 +27,24 @@ class MapGrid:
                 continue
 
     def addItem(self, pieceID: int, rotation: int, coords: "tuple[int, int]") -> "list[bool, str]":
+    
+        # Check, if ID is valid
+        if not pieceID in self.pieces:
+            raise Exception(f"Invalid piece ID: {pieceID}")
 
         # Check collision
+        
+        ## Account for element rotation
+        sizeCoordX = rotation%2
+        sizeCoordY = int(not rotation%2)
+        sizeX = coords[0] + self.pieces[pieceID].size[sizeCoordX] - 1
+        sizeY = coords[0] + self.pieces[pieceID].size[sizeCoordY] - 1
+
+        if not self.checkCoords(coords, (sizeX, sizeY)):
+            raise Exception("Area occupied")
 
         # Check if connection points match
+
 
         self.mapElements.append({
             "ID": pieceID,
@@ -38,6 +52,38 @@ class MapGrid:
             "coords": coords})
 
         return True, ""
+    
+    def delItem(self, coords: "tuple[int, int]"):
+        '''
+        
+        '''
+        print("Deletion not implemented yet")
+
+        for item in self.mapElements:
+            if item["coords"] == coords:
+                print(f"Found")
+
+    def checkCoords(self, coords: "tuple[int, int]", size:"tuple[int, int]" = (1, 1)) -> bool:
+        '''
+        Check if coords are free - return True if yes, False if not
+        '''
+
+        endCoords = (coords[0] + size[0] - 1, coords[1] + size[1] - 1)
+
+        # Check coords
+        for element in self.mapElements:
+            # Account for element rotation
+            sizeCoordX = element["rotation"]%2
+            sizeCoordY = int(not element["rotation"]%2)
+
+            itemEndCoords = (element['coords'][0] + self.pieces[element['ID']].size[sizeCoordX] - 1, element['coords'][1] + self.pieces[element['ID']].size[sizeCoordY] - 1)
+    
+            # check if item occupies space
+            if coords[0] <= itemEndCoords[0] and endCoords[0] >= element['coords'][0] and \
+               coords[1] <= itemEndCoords[1] and endCoords[1] >= element['coords'][1]:
+                return False
+            
+        return True
 
     def getDimensions(self) -> "list[tuple[int, int],tuple[int, int],tuple[int, int]]":
 
@@ -55,7 +101,6 @@ class MapGrid:
         endCoords = []
         # In case The map is still empty:
         if not self.mapElements:
-            print("Empty list")
             startCoords = [0,0]
             endCoords = [0,0]
         else:
@@ -81,9 +126,25 @@ class MapGrid:
 
         return tuple(startCoords), tuple(endCoords)
     
-    def getEndCoords(self) -> "tuple[int, int]":
 
-        return (1,1)
+    def getItemsFromCoords(self, coords: "tuple[int, int]", size:"tuple[int, int]" = (1, 1)) -> list:
+
+        endCoords = (coords[0] + size[0] - 1, coords[1] + size[1] - 1)
+        elementsInCoords = []
+        # Check coords
+        for element in self.mapElements:
+            # Account for element rotation
+            sizeCoordX = element["rotation"]%2
+            sizeCoordY = int(not element["rotation"]%2)
+
+            itemEndCoords = (element['coords'][0] + self.pieces[element['ID']].size[sizeCoordX] - 1, element['coords'][1] + self.pieces[element['ID']].size[sizeCoordY] - 1)
+    
+            # check if item occupies space
+            if coords[0] <= itemEndCoords[0] and endCoords[0] >= element['coords'][0] and \
+               coords[1] <= itemEndCoords[1] and endCoords[1] >= element['coords'][1]:
+                elementsInCoords.append(element)
+            
+        return elementsInCoords
     
     def renderMap(self):
 
@@ -107,11 +168,11 @@ class MapGrid:
 
         # Add Pieces to the map
         for element in self.mapElements:
-            print("Adding Item:", element)
-            print("Name:", self.pieces[element['ID']].name)
+            # print("Adding Item:", element)
+            # print("Name:", self.pieces[element['ID']].name)
 
             size = self.pieces[element['ID']].size
-            print(f"Element Size: {size[0]}x{size[1]}")
+            # print(f"Element Size: {size[0]}x{size[1]}")
 
             # Account for rotation
             sizeCoordX = element["rotation"]%2
@@ -121,12 +182,12 @@ class MapGrid:
             element_start_w = self.pieceSize * (element["coords"][0] - startCoords[0])
             element_start_h = self.pieceSize * (map_size[1] - (element["coords"][1] - startCoords[1]) - self.pieces[element['ID']].size[sizeCoordY])
             
-            print(f"Picture element start coords - {element_start_w},{element_start_h}")
+            # print(f"Picture element start coords - {element_start_w},{element_start_h}")
 
             element_end_w = element_start_w + self.pieceSize * self.pieces[element['ID']].size[sizeCoordX]
             element_end_h = element_start_h + self.pieceSize * self.pieces[element['ID']].size[sizeCoordY]
 
-            print(f"Picture element end coords -   {element_end_w},{element_end_h}")
+            # print(f"Picture element end coords -   {element_end_w},{element_end_h}")
 
             rendered_map[element_start_h:element_end_h,element_start_w:element_end_w] = np.rot90(self.pieces[element['ID']].image, k=-element["rotation"], axes=(0,1))     
 

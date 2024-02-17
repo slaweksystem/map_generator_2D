@@ -23,8 +23,8 @@ class MapPiece:
 
         return True, "Piece Ok"
 
-    def parseJson(pieceList: "list[dict]") -> "list[MapPiece]":
-
-        while pieceList:
-            piece = pieceList.pop(0)
-            MapPiece._validate_pieceData_(piece)
+    #def parseJson(pieceList: "list[dict]") -> "list[MapPiece]":
+    #
+    #    while pieceList:
+    #        piece = pieceList.pop(0)
+    #        MapPiece._validate_pieceData_(piece)
