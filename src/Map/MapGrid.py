@@ -26,7 +26,7 @@ class MapGrid:
                 print(f'Unable to add Piece: {candidate["name"]} - {e}')
                 continue
 
-    def addItem(self, pieceID: int, rotation: int, coords: "tuple[int, int]") -> "list[bool, str]":
+    def addItem(self, pieceID: int, rotation: int, coords: "tuple[int, int]"):
     
         # Check, if ID is valid
         if not pieceID in self.pieces:
@@ -37,22 +37,19 @@ class MapGrid:
         ## Account for element rotation
         sizeCoordX = rotation%2
         sizeCoordY = int(not rotation%2)
-        sizeX = coords[0] + self.pieces[pieceID].size[sizeCoordX] - 1
-        sizeY = coords[0] + self.pieces[pieceID].size[sizeCoordY] - 1
+        sizeX = self.pieces[pieceID].size[sizeCoordX]
+        sizeY = self.pieces[pieceID].size[sizeCoordY]
 
         if not self.checkCoords(coords, (sizeX, sizeY)):
             raise Exception(f"Area occupied: {coords}")
 
         # Check if connection points match
 
-
         self.mapElements.append({
             "ID": pieceID,
             "rotation": rotation,
             "coords": coords})
-
-        return True, ""
-    
+            
     def delItem(self, coords: "tuple[int, int]"):
         '''
         
@@ -180,12 +177,12 @@ class MapGrid:
 
             # Calculate position on the picture:
             element_start_w = self.pieceSize * (element["coords"][0] - startCoords[0])
-            element_start_h = self.pieceSize * (map_size[1] - (element["coords"][1] - startCoords[1]) - self.pieces[element['ID']].size[sizeCoordY])
+            element_start_h = self.pieceSize * (map_size[1] - (element["coords"][1] - startCoords[1]) - size[sizeCoordY])
             
             # print(f"Picture element start coords - {element_start_w},{element_start_h}")
 
-            element_end_w = element_start_w + self.pieceSize * self.pieces[element['ID']].size[sizeCoordX]
-            element_end_h = element_start_h + self.pieceSize * self.pieces[element['ID']].size[sizeCoordY]
+            element_end_w = element_start_w + self.pieceSize * size[sizeCoordX]
+            element_end_h = element_start_h + self.pieceSize * size[sizeCoordY]
 
             # print(f"Picture element end coords -   {element_end_w},{element_end_h}")
 
