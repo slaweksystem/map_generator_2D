@@ -8,7 +8,7 @@ class MapPiece:
         
         self.id = pieceData["ID"]
         self.name = pieceData["name"]
-        self.size = pieceData["size"]
+        self.size = tuple(pieceData["size"])
         # Convert lists to tuples
         self.connections = tuple(tuple(tuple(el) for el in par) for par in pieceData["connections"])
         self.fields = pieceData["fields"]

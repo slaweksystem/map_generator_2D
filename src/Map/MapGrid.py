@@ -1,6 +1,7 @@
 import numpy as np
 
 from src.Map.MapPiece import MapPiece
+from src.Map.MapHelper import *
 
 class MapGrid:
     pieces: "dict[int, MapPiece]"
